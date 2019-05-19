@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    public static final String USER_ID  = "userid";
+    public static final String USER_ID = "userid";
     public static final String DICTIONARY_PATH  = "dictionaries";
     public static final String WORDS_PATH  = "words";
 
@@ -59,10 +59,11 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void moveToDictionary(View view) {
+
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        String userId = user.getUid();
+        String id = user.getUid();
         Intent intent = new Intent(getApplicationContext(), DictionaryActivity.class);
-        intent.putExtra(USER_ID, userId);
+        intent.putExtra(USER_ID, id);
         startActivity(intent);
     }
 
