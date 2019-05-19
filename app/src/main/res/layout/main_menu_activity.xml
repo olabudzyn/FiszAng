@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainMenuActivity"
+    android:background="@color/backNew">
+
+    <TextView
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="Welcome"
+        android:textColor="#607d8b"
+        android:textStyle="bold"
+        android:id="@+id/textViewWelcome"
+        android:textAlignment="center"/>
+    <Button
+        android:layout_margin="15dp"
+        android:id="@+id/buttonLiveTranslation"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#607d8b"
+        android:textColor="#34515e"
+        android:textStyle="bold"
+        android:text="Start Live Translation"
+        android:onClick="moveToLiveTranslation"/>
+
+    <Button
+        android:layout_margin="15dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonImageTranslation"
+        android:background="#607d8b"
+        android:textColor="#34515e"
+        android:textStyle="bold"
+        android:text="Start Image Translation"
+        android:onClick="moveToImageTranslation"/>
+
+    <Button
+        android:layout_margin="15dp"
+        android:id="@+id/buttonDictionary"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#607d8b"
+        android:textColor="#34515e"
+        android:textStyle="bold"
+        android:text="Dictionary"
+        android:onClick="moveToDictionary"/>
+
+    <Button
+        android:layout_margin="15dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLogout"
+        android:background="#607d8b"
+        android:textColor="#34515e"
+        android:textStyle="bold"
+        android:text="Log out"
+        android:onClick="logOut"/>
+
+</LinearLayout>
