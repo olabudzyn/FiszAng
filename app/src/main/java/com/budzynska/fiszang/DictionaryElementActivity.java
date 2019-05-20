@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.budzynska.fiszang.basedata.Dictionary;
 import com.budzynska.fiszang.basedata.DictionaryElement;
 import com.budzynska.fiszang.listview.DictionaryElementList;
 import com.google.firebase.database.DataSnapshot;
@@ -75,6 +76,7 @@ public class DictionaryElementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), FlashcardActivity.class);
+                i.putExtra(DictionaryActivity.DICTIONARY_ID, dictionaryId);
                 startActivity(i);
             }
         });

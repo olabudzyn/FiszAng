@@ -80,6 +80,7 @@ public class TranslateActivity extends AppCompatActivity {
         dictionaries = new ArrayList<>();
 
         databaseDictionaries = FirebaseDatabase.getInstance().getReference(MainMenuActivity.DICTIONARY_PATH).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        buildList();
 
         Vision.Builder visionBuilder = new Vision.Builder(
                 new NetHttpTransport(),
@@ -119,6 +120,7 @@ public class TranslateActivity extends AppCompatActivity {
     }
 
     private void addToDictionary() {
+        showDictionaryDialog();
         DatabaseReference databaseWords = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId);
 
         String wordsId = databaseWords.push().getKey();
@@ -208,11 +210,10 @@ public class TranslateActivity extends AppCompatActivity {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View convertView = (View) inflater.inflate(R.layout.list_dictionaries_dialog, null);
+        View convertView = inflater.inflate(R.layout.list_dictionaries_dialog, null);
 
-        ListView lv = (ListView) convertView.findViewById(R.id.listViewAddWord);
+        ListView lv = convertView.findViewById(R.id.listViewAddWord);
 
-        buildList();
         lv.setAdapter(new DictionaryList(this, dictionaries));
 
         alertDialog.setView(convertView);
@@ -233,25 +234,25 @@ public class TranslateActivity extends AppCompatActivity {
         buildList(listViewDictionaries);
 
         final AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.show();
+        alertDialog.show(); */
 
-       listViewDictionaries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Dictionary dictionary = dictionaries.get(position);
                 selectDictionary(dictionary.getDictionaryId());
-                alertDialog.dismiss();
+                dialog.dismiss();
             }
-        }); */
+        });
 
     }
 
     private void buildList() {
-        databaseDictionaries.addValueEventListener(new ValueEventListener() {
+        databaseDictionaries.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot snapshotDictionary: dataSnapshot.getChildren()){
+                for (DataSnapshot snapshotDictionary : dataSnapshot.getChildren()) {
 
                     Dictionary dictionary = snapshotDictionary.getValue(Dictionary.class);
                     dictionaries.add(dictionary);

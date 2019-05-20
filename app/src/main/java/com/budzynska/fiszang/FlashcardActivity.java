@@ -44,25 +44,24 @@ public class FlashcardActivity extends AppCompatActivity {
 
         words = new ArrayList<>();
 
-     /*   String dictionaryId = getIntent().getStringExtra(DictionaryActivity.DICTIONARY_ID);
+        Intent intent = getIntent();
+        String dictionaryId = getIntent().getStringExtra(DictionaryActivity.DICTIONARY_ID);
         databaseWords = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId);
 
         databaseWords.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                words.clear();
-
                 showData(dataSnapshot);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                Log.d("Error",databaseError.getMessage());
+                Log.d("Error", databaseError.getMessage());
             }
-        }); */
+        });
 
-        words.add( new DictionaryElement("1", "cat", "kot"));
+       /* words.add( new DictionaryElement("1", "cat", "kot"));
 
         words.add( new DictionaryElement("2", "mouse", "mysz"));
 
@@ -70,21 +69,19 @@ public class FlashcardActivity extends AppCompatActivity {
 
         words.add( new DictionaryElement("4", "snake", "wąż"));
 
-        words.add( new DictionaryElement("5", "dog", "pies"));
+        words.add( new DictionaryElement("5", "dog", "pies")); */
 
-        word = words.get(0);
-        textViewFlashcard.setText(word.getEnglishWord());
 
         textViewFlashcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(flag == true){
+                if (flag == true) {
                     textViewFlashcard.setText(word.getPolishWord());
                     textViewFlashcard.setBackgroundColor(Color.parseColor("#263238"));
                     textViewFlashcard.setTextColor(Color.parseColor("#e0e0e0"));
                     flag = false;
-                }else{
+                } else {
                     textViewFlashcard.setText(word.getEnglishWord());
                     textViewFlashcard.setBackgroundColor(Color.parseColor("#e0e0e0"));
                     textViewFlashcard.setTextColor(Color.parseColor("#263238"));
@@ -106,25 +103,27 @@ public class FlashcardActivity extends AppCompatActivity {
         });
     }
 
-    private DictionaryElement getRandomWord(List<DictionaryElement> w){
+    private DictionaryElement getRandomWord(List<DictionaryElement> w) {
 
         Random r = new Random();
         int s = w.size();
-        Log.d("RANDOM", "Size of array " + s);
         int randomNumber = r.nextInt(s);
         DictionaryElement randomWord = w.get(randomNumber);
 
         return randomWord;
     }
 
-    private void showData(DataSnapshot dataSnapshot){
+    private void showData(DataSnapshot dataSnapshot) {
 
-        for(DataSnapshot wordSnapshot : dataSnapshot.getChildren()){
+        for (DataSnapshot wordSnapshot : dataSnapshot.getChildren()) {
             DictionaryElement word = wordSnapshot.getValue(DictionaryElement.class);
 
             words.add(word);
-            Log.d("DATA", word.getEnglishWord());
-
         }
 
-    }}
+        if (words.size() != 0) {
+            word = getRandomWord(words);
+            textViewFlashcard.setText(word.getEnglishWord());
+        }
+    }
+}
