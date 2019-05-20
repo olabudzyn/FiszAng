@@ -2,6 +2,7 @@ package com.budzynska.fiszang;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -64,7 +65,7 @@ public class TranslateActivity extends AppCompatActivity {
     private TranslateOptions options;
     private Translation translation;
     private Handler handler = new Handler();
-    private String translatedText, selectedText;
+    private String translatedText, selectedText, allText;
     private Vision vision;
 
     private DatabaseReference databaseDictionaries;
@@ -84,7 +85,11 @@ public class TranslateActivity extends AppCompatActivity {
         databaseDictionaries = FirebaseDatabase.getInstance().getReference(MainMenuActivity.DICTIONARY_PATH).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         buildList();
 
-        Vision.Builder visionBuilder = new Vision.Builder(
+       // Intent i = getIntent();
+        //allText = i.getStringExtra("text");
+        //txvToTranslate.setText(allText);
+
+       Vision.Builder visionBuilder = new Vision.Builder(
                 new NetHttpTransport(),
                 new AndroidJsonFactory(),
                 null);
@@ -135,7 +140,7 @@ public class TranslateActivity extends AppCompatActivity {
         });
     }
 
-    private void textDetection() {
+     private void textDetection() {
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -178,7 +183,6 @@ public class TranslateActivity extends AppCompatActivity {
         });
 
     }
-
 
     public void translate() {
         //translateText = txvToTranslate.getText().toString(); // words to translate

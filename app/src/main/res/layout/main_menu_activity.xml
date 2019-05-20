@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".MainMenuActivity"
-    android:background="@color/backNew">
+    android:background="@drawable/gradient_background"
+    tools:context=".MainMenuActivity">
 
     <TextView
         android:layout_margin="15dp"

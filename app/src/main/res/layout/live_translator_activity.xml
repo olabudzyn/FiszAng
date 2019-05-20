@@ -6,24 +6,22 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
-    android:background="@color/backNew"
-    android:weightSum="1.0">
+    android:background="@drawable/gradient_background">
 
     <SurfaceView
+        android:layout_margin="5dp"
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.7" />
     <TextView
         android:id="@+id/txvToTranslate2"
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:color/white"
-        android:textIsSelectable="true"
-        android:enabled="true"
-        android:clickable="true"
-        android:longClickable="true"/>
+        android:textIsSelectable="true" />
+
     <TextView
         android:layout_margin="5dp"
         android:layout_width="match_parent"
@@ -31,7 +29,9 @@
         android:id="@+id/txvTranslated2"
         android:layout_marginTop="10dp"
         android:background="@android:color/white"/>
+
     <Button
+        android:id="@+id/buttonSaveLiveTranslate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#34515e"

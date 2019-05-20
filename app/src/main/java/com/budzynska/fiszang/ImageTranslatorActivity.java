@@ -19,12 +19,14 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
@@ -33,6 +35,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.services.vision.v1.Vision;
+import com.google.api.services.vision.v1.VisionRequestInitializer;
+import com.google.api.services.vision.v1.model.AnnotateImageRequest;
+import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
+import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
+import com.google.api.services.vision.v1.model.Feature;
+import com.google.api.services.vision.v1.model.TextAnnotation;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,16 +60,16 @@ public class ImageTranslatorActivity extends AppCompatActivity {
     private TextureView txvImageTranslator;
     private static final int REQUEST_CAMERA_PERMISSION = 200;
 
-
     private CameraDevice cameraDevice;
     private String cameraId;
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
-    static{
-        ORIENTATIONS.append(Surface.ROTATION_0,90);
-        ORIENTATIONS.append(Surface.ROTATION_90,0);
-        ORIENTATIONS.append(Surface.ROTATION_180,270);
-        ORIENTATIONS.append(Surface.ROTATION_270,180);
+
+    static {
+        ORIENTATIONS.append(Surface.ROTATION_0, 90);
+        ORIENTATIONS.append(Surface.ROTATION_90, 0);
+        ORIENTATIONS.append(Surface.ROTATION_180, 270);
+        ORIENTATIONS.append(Surface.ROTATION_270, 180);
     }
 
 
@@ -63,10 +78,14 @@ public class ImageTranslatorActivity extends AppCompatActivity {
     private CameraCaptureSession cameraCaptureSession;
     private Handler backgroundHandler;
     private HandlerThread handlerThread;
-    private String text;
+    private String textDetected;
+    private byte[] bytes;
+
+    private Vision vision;
+    private static final String API_KEY = "AIzaSyDsKajjSP6Dnk6wYc9S_EvzIEqEw98WQfc";
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_translator_activity);
         buttonPicture = findViewById(R.id.buttonPicture);
@@ -74,14 +93,23 @@ public class ImageTranslatorActivity extends AppCompatActivity {
 
         assert txvImageTranslator != null;
         txvImageTranslator.setSurfaceTextureListener(surfaceTextureListener);
+        Vision.Builder visionBuilder = new Vision.Builder(
+                new NetHttpTransport(),
+                new AndroidJsonFactory(),
+                null);
+
+        visionBuilder.setVisionRequestInitializer(
+                new VisionRequestInitializer(API_KEY));
+
+        vision = visionBuilder.build();
+        textDetection();
 
         buttonPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 takePicture();
                 Intent intent = new Intent(ImageTranslatorActivity.this, TranslateActivity.class);
-
-                intent.putExtra("image", text);
+                intent.putExtra("text", textDetected);
                 startActivity(intent);
 
             }
@@ -89,27 +117,68 @@ public class ImageTranslatorActivity extends AppCompatActivity {
 
     }
 
+    private void textDetection() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    //InputStream inputStream = getResources().openRawResource(R.raw.superthumb);
+                    //byte[] photoData = IOUtils.toByteArray(inputStream);
+
+                    com.google.api.services.vision.v1.model.Image inputImage = new com.google.api.services.vision.v1.model.Image();
+                    inputImage.encodeContent(bytes);
+
+                    Feature desiredFeature = new Feature();
+                    desiredFeature.setType("TEXT_DETECTION");
+
+                    AnnotateImageRequest request = new AnnotateImageRequest();
+                    request.setImage(inputImage);
+                    request.setFeatures(Arrays.asList(desiredFeature));
+
+                    BatchAnnotateImagesRequest batchRequest = new BatchAnnotateImagesRequest();
+                    batchRequest.setRequests(Arrays.asList(request));
+
+                    BatchAnnotateImagesResponse batchResponse =
+                            vision.images().annotate(batchRequest).execute();
+
+                    final TextAnnotation text = batchResponse.getResponses()
+                            .get(0).getFullTextAnnotation();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            textDetected = text.getText();
+                        }
+                    });
+
+                } catch (Exception e) {
+                    Log.d("ERROR", e.getMessage());
+                }
+            }
+        });
+    }
+
     private void takePicture() {
-        if(cameraDevice == null)
+        if (cameraDevice == null)
             return;
-        CameraManager manager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
-        try{
+        CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        try {
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraDevice.getId());
             Size[] jpegSizes = null;
-            if(characteristics != null)
+            if (characteristics != null)
                 jpegSizes = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
                         .getOutputSizes(ImageFormat.JPEG);
 
             //Capture image with custom size
             int width = 640;
             int height = 480;
-            if(jpegSizes != null && jpegSizes.length > 0)
-            {
+            if (jpegSizes != null && jpegSizes.length > 0) {
                 width = jpegSizes[0].getWidth();
                 height = jpegSizes[0].getHeight();
             }
 
-            final ImageReader reader = ImageReader.newInstance(width,height,ImageFormat.JPEG,1);
+            final ImageReader reader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1);
             List<Surface> outputSurface = new ArrayList<>(2);
             outputSurface.add(reader.getSurface());
             outputSurface.add(new Surface(txvImageTranslator.getSurfaceTexture()));
@@ -120,19 +189,29 @@ public class ImageTranslatorActivity extends AppCompatActivity {
 
             //Check orientation base on device
             int rotation = getWindowManager().getDefaultDisplay().getRotation();
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION,ORIENTATIONS.get(rotation));
+            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, ORIENTATIONS.get(rotation));
 
 
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader imageReader) {
                     Image image = null;
-
+                    try {
                         image = reader.acquireLatestImage();
                         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
                         byte[] bytes = new byte[buffer.capacity()];
                         buffer.get(bytes);
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0, bytes.length);
+                        save(bytes);
+                    } catch (Exception ee) {
+                    }
+                    finally {
+                        if(image!=null)
+                            image.close();
+                    }
+                }
+
+                void save(byte[] bytes){
+
                 }
 
             };
@@ -152,8 +231,8 @@ public class ImageTranslatorActivity extends AppCompatActivity {
             cameraDevice.createCaptureSession(outputSurface, new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    try{
-                        cameraCaptureSession.capture(captureBuilder.build(),captureListener,backgroundHandler);
+                    try {
+                        cameraCaptureSession.capture(captureBuilder.build(), captureListener, backgroundHandler);
                     } catch (CameraAccessException e) {
                         e.printStackTrace();
                     }
@@ -163,7 +242,7 @@ public class ImageTranslatorActivity extends AppCompatActivity {
                 public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
 
                 }
-            },backgroundHandler);
+            }, backgroundHandler);
 
 
         } catch (CameraAccessException e) {
@@ -209,7 +288,7 @@ public class ImageTranslatorActivity extends AppCompatActivity {
         assert map != null;
         imageDimentions = map.getOutputSizes(SurfaceTexture.class)[0];
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
             return;
@@ -231,7 +310,7 @@ public class ImageTranslatorActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onDisconnected( @NonNull CameraDevice camera) {
+        public void onDisconnected(@NonNull CameraDevice camera) {
             cameraDevice.close();
         }
 
@@ -257,7 +336,7 @@ public class ImageTranslatorActivity extends AppCompatActivity {
             @Override
             public void onConfigured(CameraCaptureSession session) {
 
-                if(cameraDevice == null){
+                if (cameraDevice == null) {
                     return;
                 }
 
@@ -275,12 +354,12 @@ public class ImageTranslatorActivity extends AppCompatActivity {
                 Toast.makeText(ImageTranslatorActivity.this, "Changed", Toast.LENGTH_SHORT).show();
 
             }
-        }, null );
+        }, null);
     }
 
     private void updatePreview() throws CameraAccessException {
 
-        if(cameraDevice == null){
+        if (cameraDevice == null) {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -296,13 +375,13 @@ public class ImageTranslatorActivity extends AppCompatActivity {
         super.onResume();
         startBackgroundThread();
 
-        if(txvImageTranslator.isAvailable()){
+        if (txvImageTranslator.isAvailable()) {
             try {
                 openCamera();
             } catch (CameraAccessException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             txvImageTranslator.setSurfaceTextureListener(surfaceTextureListener);
         }
     }
