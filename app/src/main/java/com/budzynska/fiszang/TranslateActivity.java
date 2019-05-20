@@ -1,5 +1,6 @@
 package com.budzynska.fiszang;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -67,6 +68,7 @@ public class TranslateActivity extends AppCompatActivity {
     private Vision vision;
 
     private DatabaseReference databaseDictionaries;
+    private DatabaseReference databaseWords;
 
 
     @Override
@@ -112,7 +114,8 @@ public class TranslateActivity extends AppCompatActivity {
         btnAddToDictionary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToDictionary();
+                showDictionaryDialog();
+                //addToDictionary();
             }
         });
         //words = getIntent().getStringExtra("image");
@@ -120,9 +123,8 @@ public class TranslateActivity extends AppCompatActivity {
     }
 
     private void addToDictionary() {
-        showDictionaryDialog();
-        DatabaseReference databaseWords = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId);
 
+        databaseWords = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId);
         String wordsId = databaseWords.push().getKey();
         DictionaryElement words = new DictionaryElement(wordsId, selectedText, translatedText);
         databaseWords.child(wordsId).setValue(words).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -131,10 +133,6 @@ public class TranslateActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Word added successfully!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void selectDictionary(String id) {
-        dictionaryId = id;
     }
 
     private void textDetection() {
@@ -208,13 +206,14 @@ public class TranslateActivity extends AppCompatActivity {
 
     private void showDictionaryDialog() {
 
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(TranslateActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View convertView = inflater.inflate(R.layout.list_dictionaries_dialog, null);
 
-        ListView lv = convertView.findViewById(R.id.listViewAddWord);
+        ListView lv = convertView.findViewById(R.id.listViewDialog);
+        DictionaryList dictionaryListAdapter = new DictionaryList(getApplicationContext(), dictionaries);
+        lv.setAdapter(dictionaryListAdapter);
 
-        lv.setAdapter(new DictionaryList(this, dictionaries));
 
         alertDialog.setView(convertView);
         alertDialog.setTitle("Choose dictionary");
@@ -222,26 +221,13 @@ public class TranslateActivity extends AppCompatActivity {
         AlertDialog dialog = alertDialog.create();
         dialog.show();
 
-       /* AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-
-        final View dialogView = inflater.inflate(R.layout.list_dictionaries_dialog, null);
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.setTitle("Choose dictionary");
-
-        final TextView textViewAvaliable = dialogView.findViewById(R.id.textViewAvaliableDictionaries);
-        final ListView listViewDictionaries = dialogView.findViewById(R.id.listViewAddWord);
-        buildList(listViewDictionaries);
-
-        final AlertDialog alertDialog = dialogBuilder.create();
-        alertDialog.show(); */
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Dictionary dictionary = dictionaries.get(position);
-                selectDictionary(dictionary.getDictionaryId());
+                dictionaryId = dictionary.getDictionaryId();
                 dialog.dismiss();
+                addToDictionary();
             }
         });
 

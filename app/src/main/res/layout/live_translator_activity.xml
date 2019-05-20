@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backNew">
-
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@color/backNew"
+    android:weightSum="1.0">
 
     <SurfaceView
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
-        android:layout_height="430dp"
-        android:layout_weight="4" />
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5" />
     <TextView
+        android:id="@+id/txvToTranslate2"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/surfaceView"
-        android:layout_marginTop="10dp"
-        android:id="@+id/txvToTranslate2"
         android:background="@android:color/white"
         android:textIsSelectable="true"
         android:enabled="true"
         android:clickable="true"
         android:longClickable="true"/>
     <TextView
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/txvToTranslate2"
         android:id="@+id/txvTranslated2"
         android:layout_marginTop="10dp"
         android:background="@android:color/white"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txvTranslated2"
         android:background="#34515e"
         android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
+        android:layout_margin = "5dp"
         android:text="Zapisz"/>
 
-</RelativeLayout>
+</LinearLayout>

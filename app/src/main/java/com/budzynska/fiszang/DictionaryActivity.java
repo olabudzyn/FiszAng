@@ -83,7 +83,7 @@ public class DictionaryActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Dictionary dictionary = dictionaries.get(position);
                 showOptionDialog(dictionary.getDictionaryId(), dictionary.getDictionaryName());
-                return false;
+                return true;
             }
         });
     }
@@ -165,7 +165,6 @@ public class DictionaryActivity extends AppCompatActivity {
         final EditText editTextDictionaryUpdateName = dialogView.findViewById(R.id.editTextUpdateDictionary);
         final Button buttonSave = dialogView.findViewById(R.id.buttonSaveUpdateDictionary);
         final Button buttonDelete = dialogView.findViewById(R.id.deleteDictionary);
-        final Button buttonFlashcards = dialogView.findViewById(R.id.buttonFlashcards);
 
         editTextDictionaryUpdateName.setText(dictionaryName);
         dialogBuilder.setTitle("Update or delete dictionary");
@@ -196,14 +195,6 @@ public class DictionaryActivity extends AppCompatActivity {
             }
         });
 
-        buttonFlashcards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FlashcardActivity.class);
-                intent.putExtra(DICTIONARY_ID, dictionaryId);
-                startActivity(intent);
-            }
-        });
     }
 
     private void deleteDictionary(String id){

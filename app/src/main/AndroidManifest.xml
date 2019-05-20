@@ -15,19 +15,19 @@
         android:theme="@style/AppTheme">
         <activity android:name=".FlashcardActivity"></activity>
         <activity android:name=".DictionaryElementActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".DictionaryActivity" />
+        <activity android:name=".DictionaryActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ImageTranslatorActivity" />
         <activity android:name=".LiveTranslatorAcitivity" />
-        <activity android:name=".TranslateActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainMenuActivity" />
+        <activity android:name=".TranslateActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".RegisterActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".MainMenuActivity" android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
