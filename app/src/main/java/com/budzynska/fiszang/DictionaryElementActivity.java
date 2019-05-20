@@ -1,7 +1,6 @@
 package com.budzynska.fiszang;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,23 +15,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.budzynska.fiszang.basedata.Dictionary;
 import com.budzynska.fiszang.basedata.DictionaryElement;
 import com.budzynska.fiszang.listview.DictionaryElementList;
-import com.budzynska.fiszang.listview.DictionaryList;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DictionaryElementActivity extends AppCompatActivity {
 
-    private Button buttonAddNewElement;
+    private Button buttonAddNewElement, buttonFlash;
     private ListView listViewWords;
     private TextView textViewWords;
     private List<DictionaryElement> dictionaryElements;
@@ -46,8 +43,9 @@ public class DictionaryElementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dictionary_element);
 
         buttonAddNewElement = findViewById(R.id.buttonAddElement);
-        listViewWords = findViewById(R.id.listViewElemets);
+        listViewWords = findViewById(R.id.listViewElements);
         textViewWords = findViewById(R.id.txvDictionaryElement);
+        buttonFlash = findViewById(R.id.buttonFlashcards2);
 
         Intent intent = getIntent();
         dictionaryId = intent.getStringExtra(DictionaryActivity.DICTIONARY_ID);
@@ -70,6 +68,14 @@ public class DictionaryElementActivity extends AppCompatActivity {
 
                 showOptionDialog(dictionaryElement.getElementId(), dictionaryElement.getEnglishWord(), dictionaryElement.getPolishWord());
 
+            }
+        });
+
+        buttonFlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), FlashcardActivity.class);
+                startActivity(i);
             }
         });
 
@@ -116,6 +122,8 @@ public class DictionaryElementActivity extends AppCompatActivity {
         dialogBuilder.setTitle("Add new word");
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
+
+
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override

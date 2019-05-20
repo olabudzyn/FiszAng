@@ -48,8 +48,8 @@ public class DictionaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dictionary_activity);
 
-        Intent intent = getIntent();
-        userId = intent.getStringExtra(MainMenuActivity.USER_ID);
+
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseDictionaries = FirebaseDatabase.getInstance().getReference(MainMenuActivity.DICTIONARY_PATH).child(userId);
 
         dictionaries = new ArrayList<>();
@@ -157,7 +157,7 @@ public class DictionaryActivity extends AppCompatActivity {
     private void showOptionDialog(final String dictionaryId, String dictionaryName){
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
+        final LayoutInflater inflater = getLayoutInflater();
 
         final View dialogView = inflater.inflate(R.layout.option_dictionary_dialog,null);
         dialogBuilder.setView(dialogView);
@@ -165,6 +165,7 @@ public class DictionaryActivity extends AppCompatActivity {
         final EditText editTextDictionaryUpdateName = dialogView.findViewById(R.id.editTextUpdateDictionary);
         final Button buttonSave = dialogView.findViewById(R.id.buttonSaveUpdateDictionary);
         final Button buttonDelete = dialogView.findViewById(R.id.deleteDictionary);
+        final Button buttonFlashcards = dialogView.findViewById(R.id.buttonFlashcards);
 
         editTextDictionaryUpdateName.setText(dictionaryName);
         dialogBuilder.setTitle("Update or delete dictionary");
@@ -192,6 +193,15 @@ public class DictionaryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 deleteDictionary(dictionaryId);
                 alertDialog.dismiss();
+            }
+        });
+
+        buttonFlashcards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FlashcardActivity.class);
+                intent.putExtra(DICTIONARY_ID, dictionaryId);
+                startActivity(intent);
             }
         });
     }

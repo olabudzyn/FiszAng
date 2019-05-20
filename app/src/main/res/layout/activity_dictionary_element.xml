@@ -20,7 +20,7 @@
         android:textStyle="bold" />
     <ListView
         android:layout_marginTop="10dp"
-        android:id="@+id/listViewElemets"
+        android:id="@+id/listViewElements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.6"/>
@@ -30,5 +30,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Add new words"/>
+    <Button
+        android:id="@+id/buttonFlashcards2"
+        android:text="Flashcards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

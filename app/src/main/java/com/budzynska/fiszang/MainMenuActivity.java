@@ -60,10 +60,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void moveToDictionary(View view) {
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String id = user.getUid();
         Intent intent = new Intent(getApplicationContext(), DictionaryActivity.class);
-        intent.putExtra(USER_ID, id);
         startActivity(intent);
     }
 
