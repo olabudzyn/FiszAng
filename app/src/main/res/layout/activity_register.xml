@@ -7,7 +7,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/gradient2"
     tools:context=".RegisterActivity">
 
     <TextView
@@ -25,12 +25,14 @@
         android:layout_margin="@dimen/normal_margin"
         android:inputType="textEmailAddress"
         android:hint="Enter your email"
+        android:textColor="@android:color/white"
         android:id="@+id/editTextEmailRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:layout_margin="@dimen/medium_margin"
+        android:textColor="@android:color/white"
         android:inputType="textPassword"
         android:hint="Enter your password"
         android:id="@+id/editTextPasswordRegister"
@@ -47,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/buttonshape"
+        android:background="@drawable/buttonshape3"
         android:shadowColor="#424242"
         android:shadowDx="0"
         android:shadowDy="0"
@@ -58,6 +60,7 @@
         android:layout_margin="@dimen/medium_margin"
         android:text="Already registered? Sign in here."
         android:textAlignment="center"
+        android:textColor="#cfd8dc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

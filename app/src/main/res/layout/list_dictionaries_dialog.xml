@@ -4,13 +4,14 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient"
     android:layout_height="match_parent">
 
     <TextView
         android:text="Avaliable Dictionaries"
         android:id="@+id/textViewAvaliableDictionaries"
-        android:textColor="@android:color/black"
         android:gravity="center"
+        android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:layout_margin="@dimen/min_margin"
         android:layout_width="wrap_content"

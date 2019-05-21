@@ -5,7 +5,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="1.0"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/gradient2">
 
     <ImageView
         android:id="@+id/texture"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/buttonshape"
+        android:background="@drawable/buttonshape3"
         android:shadowColor="#424242"
         android:shadowDx="0"
         android:shadowDy="0"
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/buttonshape"
+        android:background="@drawable/buttonshape3"
         android:shadowColor="#424242"
         android:shadowDx="0"
         android:shadowDy="0"

@@ -1,16 +1,14 @@
 package com.budzynska.fiszang;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.budzynska.fiszang.basedata.Dictionary;
 import com.budzynska.fiszang.basedata.DictionaryElement;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,8 +27,7 @@ public class FlashcardActivity extends AppCompatActivity {
     private TextView textViewName;
     private boolean flag = true;
     private DictionaryElement word;
-
-    DatabaseReference databaseWords;
+    private DatabaseReference databaseWords;
     private List<DictionaryElement> words;
 
     @Override
@@ -68,16 +65,15 @@ public class FlashcardActivity extends AppCompatActivity {
 
                 if (flag == true) {
                     textViewFlashcard.setText(word.getPolishWord());
-                    textViewFlashcard.setBackgroundColor(Color.parseColor("#263238"));
-                    textViewFlashcard.setTextColor(Color.parseColor("#e0e0e0"));
+                    textViewFlashcard.setBackgroundResource(R.drawable.flashcardshape);
+                    textViewFlashcard.setTextColor(getColor(R.color.white2));
                     flag = false;
                 } else {
                     textViewFlashcard.setText(word.getEnglishWord());
-                    textViewFlashcard.setBackgroundColor(Color.parseColor("#e0e0e0"));
-                    textViewFlashcard.setTextColor(Color.parseColor("#263238"));
+                    textViewFlashcard.setBackgroundResource(R.drawable.flashcardshape2);
+                    textViewFlashcard.setTextColor(getColor(R.color.dark));
                     flag = true;
                 }
-
             }
         });
 
@@ -85,10 +81,10 @@ public class FlashcardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 word = getRandomWord(words);
-                textViewFlashcard.setBackgroundColor(Color.parseColor("#e0e0e0"));
-                textViewFlashcard.setTextColor(Color.parseColor("#263238"));
+                textViewFlashcard.setBackgroundResource(R.drawable.flashcardshape2);
                 textViewFlashcard.setText(word.getEnglishWord());
-                flag = false;
+                textViewFlashcard.setTextColor(getColor(R.color.dark));
+                flag = true;
             }
         });
     }
@@ -116,4 +112,20 @@ public class FlashcardActivity extends AppCompatActivity {
             textViewFlashcard.setText(word.getEnglishWord());
         }
     }
+
+    private boolean changeColor(boolean f) {
+
+        if (f == true) {
+            textViewFlashcard.setText(word.getPolishWord());
+            textViewFlashcard.setBackgroundColor(R.drawable.flashcardshape);
+            f = false;
+        } else {
+            textViewFlashcard.setText(word.getEnglishWord());
+            textViewFlashcard.setBackgroundColor(R.drawable.flashcardshape2);
+            f = true;
+        }
+
+        return f;
+    }
+
 }

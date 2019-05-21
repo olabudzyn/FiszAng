@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/medium_margin"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         android:text="Update or delete word"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/medium_margin"
+        android:textColor="@android:color/white"
         android:hint="Enter new english word"
         android:inputType="text" />
 
@@ -27,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/medium_margin"
+        android:textColor="@android:color/white"
         android:hint="Enter new polish word"
         android:inputType="text" />
 
@@ -47,7 +49,8 @@
             android:shadowColor="#424242"
             android:shadowDx="0"
             android:shadowDy="0"
-            android:background="@drawable/buttonshape2"
+            android:textColor="@android:color/white"
+            android:background="@drawable/buttonshape3"
             android:layout_weight="0.5"
             android:text="Save" />
 
@@ -58,7 +61,8 @@
             android:shadowColor="#424242"
             android:shadowDx="0"
             android:shadowDy="0"
-            android:background="@drawable/buttonshape2"
+            android:textColor="@android:color/white"
+            android:background="@drawable/buttonshape3"
             android:textAllCaps="false"
             android:layout_margin="@dimen/min_margin"
             android:layout_weight="0.5"

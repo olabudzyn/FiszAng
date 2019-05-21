@@ -2,12 +2,10 @@ package com.budzynska.fiszang;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -104,7 +102,6 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
 
 
         alertDialog.setView(convertView);
-        alertDialog.setTitle("Choose dictionary");
 
         AlertDialog dialog = alertDialog.create();
         dialog.show();
@@ -130,7 +127,7 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
         databaseWords = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId);
         String wordsId = databaseWords.push().getKey();
         String translatedText = translate(selectedText);
-        DictionaryElement words = new DictionaryElement(wordsId, selectedText, translatedText);
+        DictionaryElement words = new DictionaryElement(wordsId, selectedText.toLowerCase(), translatedText.toLowerCase());
         databaseWords.child(wordsId).setValue(words).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -252,8 +249,6 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
                                     String translated = translate(currentText);
                                     txvTranslated.setText(translated);
                                 }
-
-
 
                             }
                         });

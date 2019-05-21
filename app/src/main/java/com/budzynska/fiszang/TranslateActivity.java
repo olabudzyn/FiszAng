@@ -39,7 +39,7 @@ public class TranslateActivity extends AppCompatActivity {
 
     private Button btnTranslate, btnAddToDictionary;
     private TextView txvTranslated, txvToTranslate;
-    private static final String API_KEY = "AIzaSyDsKajjSP6Dnk6wYc9S_EvzIEqEw98WQfc";
+   // private static final String API_KEY = "AIzaSyDsKajjSP6Dnk6wYc9S_EvzIEqEw98WQfc";
     private List<Dictionary> dictionaries;
     private String dictionaryId;
 
@@ -77,7 +77,7 @@ public class TranslateActivity extends AppCompatActivity {
                 null);
 
         visionBuilder.setVisionRequestInitializer(
-                new VisionRequestInitializer(API_KEY));
+                new VisionRequestInitializer(getString(R.string.api_key)));
 
         vision = visionBuilder.build();
 
@@ -96,7 +96,12 @@ public class TranslateActivity extends AppCompatActivity {
         btnAddToDictionary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDictionaryDialog();
+                if(translatedText != null) {
+                    showDictionaryDialog();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Cannot add word", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
 
@@ -106,10 +111,11 @@ public class TranslateActivity extends AppCompatActivity {
 
         databaseWords = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId);
         String wordsId = databaseWords.push().getKey();
-        DictionaryElement words = new DictionaryElement(wordsId, selectedText, translatedText);
+        DictionaryElement words = new DictionaryElement(wordsId, selectedText.toLowerCase(), translatedText.toLowerCase());
         databaseWords.child(wordsId).setValue(words).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                txvTranslated.setText("");
                 Toast.makeText(getApplicationContext(), "Word added successfully!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -118,10 +124,11 @@ public class TranslateActivity extends AppCompatActivity {
 
     public void translate() {
 
+        if(selectedText != null){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                options = TranslateOptions.newBuilder().setApiKey(API_KEY).build();
+                options = TranslateOptions.newBuilder().setApiKey(getString(R.string.api_key)).build();
                 translate = options.getService();
                 translation = translate.translate(selectedText, Translate.TranslateOption.sourceLanguage("en"), Translate.TranslateOption.targetLanguage("pl"));
                 handler.post(new Runnable() {
@@ -137,6 +144,7 @@ public class TranslateActivity extends AppCompatActivity {
             }
         }.execute();
 
+        }
     }
 
     private void showDictionaryDialog() {

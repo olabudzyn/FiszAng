@@ -11,7 +11,7 @@
         android:layout_margin="@dimen/medium_margin"
         android:text="Add dictionary"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
 
     <EditText
@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/medium_margin"
         android:layout_marginRight="@dimen/medium_margin"
+        android:textColor="@android:color/white"
         android:hint="Enter new dictionary"
         android:inputType="text" />
 
@@ -28,11 +29,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
+        android:textColor="@android:color/white"
         android:layout_margin="5dp"
         android:shadowColor="#424242"
         android:shadowDx="0"
         android:shadowDy="0"
-        android:background="@drawable/buttonshape2"
+        android:background="@drawable/buttonshape3"
         android:gravity="center"
         android:text="Save" />
 

@@ -147,7 +147,7 @@ public class DictionaryActivity extends AppCompatActivity {
     private void addDictionary(String name) {
 
         String id = databaseDictionaries.push().getKey();
-        Dictionary dictionary = new Dictionary(name, id);
+        Dictionary dictionary = new Dictionary(name.toLowerCase(), id);
 
         databaseDictionaries.child(id).setValue(dictionary);
         Toast.makeText(getApplicationContext(), "Dictionary added successfully", Toast.LENGTH_SHORT).show();

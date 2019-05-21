@@ -34,7 +34,7 @@ public class DictionaryElementActivity extends AppCompatActivity {
     private ListView listViewWords;
     private TextView textViewWords;
     private List<DictionaryElement> dictionaryElements;
-    private  String dictionaryId;
+    private String dictionaryId;
 
     private DatabaseReference databaseWords;
 
@@ -149,7 +149,7 @@ public class DictionaryElementActivity extends AppCompatActivity {
     private void addNewElement(String englishWord, String polishWord) {
 
         String id = databaseWords.push().getKey();
-        DictionaryElement dictionaryElement = new DictionaryElement(id, englishWord, polishWord);
+        DictionaryElement dictionaryElement = new DictionaryElement(id, englishWord.toLowerCase(), polishWord.toLowerCase());
 
         databaseWords.child(id).setValue(dictionaryElement);
         Toast.makeText(getApplicationContext(), "Word added successfully", Toast.LENGTH_SHORT).show();
@@ -215,7 +215,7 @@ public class DictionaryElementActivity extends AppCompatActivity {
 
     }
 
-    private void deleteElement(String id){
+    private void deleteElement(String id) {
 
         DatabaseReference databaseWord = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId).child(id);
         databaseWord.removeValue();

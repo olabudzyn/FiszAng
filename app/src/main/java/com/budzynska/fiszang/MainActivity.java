@@ -2,14 +2,13 @@ package com.budzynska.fiszang;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             // go to MainMenuActivity
             finish();
             Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
@@ -70,17 +69,17 @@ public class MainActivity extends AppCompatActivity {
         String email = editTextEmailLogin.getText().toString().trim();
         String password = editTextPasswordLogin.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
 
             Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(password)) {
 
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(password.length() < 6){
+        if (password.length() < 6) {
 
             Toast.makeText(this, "Password must have 6 signs at least.", Toast.LENGTH_SHORT).show();
             return;
@@ -95,12 +94,12 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressDialog.dismiss();
 
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     // start MainMenuActivity
                     finish();
                     Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Incorrect email or password. Please try again.", Toast.LENGTH_SHORT).show();
                 }
 
