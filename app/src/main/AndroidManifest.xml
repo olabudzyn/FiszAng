@@ -3,6 +3,8 @@
     package="com.budzynska.fiszang">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.hardware.camera2.full" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -23,8 +25,8 @@
 
         </activity>
         <activity android:name=".DictionaryActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ImageTranslatorActivity" />
-        <activity android:name=".LiveTranslatorAcitivity" />
+        <activity android:name=".ImageTranslatorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".LiveTranslatorAcitivity" android:screenOrientation="portrait"/>
         <activity android:name=".TranslateActivity" android:screenOrientation="portrait"/>
         <activity android:name=".RegisterActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".MainMenuActivity" android:screenOrientation="portrait"/>
@@ -32,6 +34,16 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.budzynska.fiszang"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
     </application>
 
 </manifest>

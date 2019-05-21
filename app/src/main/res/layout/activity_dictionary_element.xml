@@ -1,40 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
     android:background="@drawable/gradient_background"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".DictionaryElementActivity">
 
     <TextView
-        android:layout_marginTop="15dp"
         android:id="@+id/txvDictionaryElement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/normal_margin"
         android:text="Your Words"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#F0F0F0"
         android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold" />
+
     <ListView
-        android:layout_marginTop="10dp"
         android:id="@+id/listViewElements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.6"/>
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_weight="0.6" />
+
     <Button
         android:id="@+id/buttonAddElement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Add new words"/>
-    <Button
-        android:id="@+id/buttonFlashcards2"
-        android:text="Flashcards"
+        android:textAllCaps="false"
+        android:textColor="#F0F0F0"
+        android:textStyle="italic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:layout_marginLeft="@dimen/medium_margin"
+        android:layout_marginRight="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="Add new word" />
+
+    <Button
+        android:id="@+id/buttonFlashcards"
+        android:textAllCaps="false"
+        android:textColor="#F0F0F0"
+        android:textStyle="italic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:layout_margin="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="Flashcards" />
+
 
 </LinearLayout>

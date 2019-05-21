@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <EditText
-        android:layout_margin="10dp"
-        android:id="@+id/editTextAddDictionaryName"
-        android:inputType="text"
-        android:hint="Enter new dictionary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:layout_margin="10dp"
-        android:id="@+id/buttonSaveDictionary"
-        android:gravity="center"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"/>
+        android:layout_margin="@dimen/medium_margin"
+        android:text="Add dictionary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextAddDictionaryName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/medium_margin"
+        android:layout_marginRight="@dimen/medium_margin"
+        android:hint="Enter new dictionary"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/buttonSaveDictionary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:layout_margin="5dp"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:background="@drawable/buttonshape2"
+        android:gravity="center"
+        android:text="Save" />
 
 </LinearLayout>

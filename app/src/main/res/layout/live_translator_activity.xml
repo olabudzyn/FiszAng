@@ -9,34 +9,42 @@
     android:background="@drawable/gradient_background">
 
     <SurfaceView
-        android:layout_margin="5dp"
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="750dp"
         android:layout_weight="0.7" />
+
     <TextView
         android:id="@+id/txvToTranslate2"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/min_margin"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@android:color/white"
         android:textIsSelectable="true" />
 
     <TextView
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/min_margin"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:id="@+id/txvTranslated2"
         android:layout_marginTop="10dp"
         android:background="@android:color/white"/>
 
     <Button
         android:id="@+id/buttonSaveLiveTranslate"
+        android:textAllCaps="false"
+        android:textColor="#F0F0F0"
+        android:textStyle="italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#34515e"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:gravity="center"
-        android:layout_margin = "5dp"
-        android:text="Zapisz"/>
+        android:layout_margin = "@dimen/min_margin"
+        android:text="Save"/>
 
 </LinearLayout>

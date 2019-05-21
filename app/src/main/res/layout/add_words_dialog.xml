@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <EditText
-        android:layout_margin="10dp"
-        android:id="@+id/editTextAddEnglishWord"
-        android:inputType="text"
-        android:hint="Enter english word"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:layout_margin="10dp"
-        android:id="@+id/editTextAddPolishWord"
-        android:inputType="text"
-        android:hint="Enter polish word"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_margin="10dp"
-        android:id="@+id/buttonSaveWords"
-        android:gravity="center"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"/>
+        android:layout_margin="@dimen/medium_margin"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:text="Add new word"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <EditText
+        android:id="@+id/editTextAddEnglishWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="Enter english word"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextAddPolishWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        android:hint="Enter polish word"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/buttonSaveWords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:background="@drawable/buttonshape2"
+        android:layout_margin="@dimen/medium_margin"
+        android:gravity="center"
+        android:text="Save" />
 
 </LinearLayout>

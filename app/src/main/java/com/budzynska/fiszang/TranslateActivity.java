@@ -85,11 +85,11 @@ public class TranslateActivity extends AppCompatActivity {
         databaseDictionaries = FirebaseDatabase.getInstance().getReference(MainMenuActivity.DICTIONARY_PATH).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         buildList();
 
-       // Intent i = getIntent();
-        //allText = i.getStringExtra("text");
-        //txvToTranslate.setText(allText);
+        Intent i = getIntent();
+        allText = i.getStringExtra("text");
+        txvToTranslate.setText(allText);
 
-       Vision.Builder visionBuilder = new Vision.Builder(
+        Vision.Builder visionBuilder = new Vision.Builder(
                 new NetHttpTransport(),
                 new AndroidJsonFactory(),
                 null);
@@ -98,7 +98,7 @@ public class TranslateActivity extends AppCompatActivity {
                 new VisionRequestInitializer(API_KEY));
 
         vision = visionBuilder.build();
-        textDetection();
+        //textDetection();
 
 
         //txvToTranslate.setText(newText);
@@ -140,7 +140,7 @@ public class TranslateActivity extends AppCompatActivity {
         });
     }
 
-     private void textDetection() {
+    private void textDetection() {
 
         AsyncTask.execute(new Runnable() {
             @Override

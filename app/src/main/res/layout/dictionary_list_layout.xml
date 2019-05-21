@@ -9,8 +9,9 @@
         android:id="@+id/textViewDictionaryName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/medium_margin"
+        android:textColor="@android:color/white"
         android:text="DictionaryName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
 </LinearLayout>

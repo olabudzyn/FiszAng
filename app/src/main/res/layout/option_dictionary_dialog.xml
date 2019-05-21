@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete or update dictionary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
 
     <EditText
-        android:layout_margin="10dp"
         android:id="@+id/editTextUpdateDictionary"
-        android:inputType="text"
-        android:hint="Enter new dictionary name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        android:hint="Enter new dictionary name"
+        android:inputType="text" />
 
 
     <LinearLayout
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="@dimen/medium_margin"
         android:orientation="horizontal"
         android:weightSum="1.0">
 
@@ -27,7 +34,12 @@
             android:id="@+id/buttonSaveUpdateDictionary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:textAllCaps="false"
+            android:shadowColor="#424242"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:background="@drawable/buttonshape2"
+            android:layout_margin="@dimen/min_margin"
             android:layout_weight="0.5"
             android:text="Save" />
 
@@ -35,7 +47,12 @@
             android:id="@+id/deleteDictionary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:layout_margin="5dp"
+            android:shadowColor="#424242"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:background="@drawable/buttonshape2"
             android:layout_weight="0.5"
             android:text="Delete" />
 

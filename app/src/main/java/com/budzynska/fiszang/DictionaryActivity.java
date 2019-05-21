@@ -117,7 +117,7 @@ public class DictionaryActivity extends AppCompatActivity {
 
     private void showAddDictionaryDialog() {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         LayoutInflater inflater = getLayoutInflater();
 
         final View dialogView = inflater.inflate(R.layout.add_dialog,null);
@@ -126,7 +126,6 @@ public class DictionaryActivity extends AppCompatActivity {
         final EditText editTextDictionaryName = dialogView.findViewById(R.id.editTextAddDictionaryName);
         final Button buttonSave = dialogView.findViewById(R.id.buttonSaveDictionary);
 
-        dialogBuilder.setTitle("Add Dictionary");
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
 
@@ -156,7 +155,7 @@ public class DictionaryActivity extends AppCompatActivity {
 
     private void showOptionDialog(final String dictionaryId, String dictionaryName){
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         final LayoutInflater inflater = getLayoutInflater();
 
         final View dialogView = inflater.inflate(R.layout.option_dictionary_dialog,null);
@@ -167,7 +166,6 @@ public class DictionaryActivity extends AppCompatActivity {
         final Button buttonDelete = dialogView.findViewById(R.id.deleteDictionary);
 
         editTextDictionaryUpdateName.setText(dictionaryName);
-        dialogBuilder.setTitle("Update or delete dictionary");
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
 

@@ -9,25 +9,36 @@
     android:layout_weight="1.0">
 
     <TextView
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/normal_margin"
         android:id="@+id/txvDictionary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Dictionaries"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
     <ListView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/medium_margin"
         android:id="@+id/lisViewDictionaries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.6"/>
     <Button
         android:id="@+id/buttonAddDictionary"
+
+        android:gravity="center"
+        android:layout_margin="@dimen/min_margin"
+        android:textAllCaps="false"
+        android:textColor="#F0F0F0"
+        android:textStyle="italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
         android:text="Add dictionary"/>
 
 </LinearLayout>

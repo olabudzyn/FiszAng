@@ -46,7 +46,7 @@ public class DictionaryElementActivity extends AppCompatActivity {
         buttonAddNewElement = findViewById(R.id.buttonAddElement);
         listViewWords = findViewById(R.id.listViewElements);
         textViewWords = findViewById(R.id.txvDictionaryElement);
-        buttonFlash = findViewById(R.id.buttonFlashcards2);
+        buttonFlash = findViewById(R.id.buttonFlashcards);
 
         Intent intent = getIntent();
         dictionaryId = intent.getStringExtra(DictionaryActivity.DICTIONARY_ID);
@@ -111,7 +111,7 @@ public class DictionaryElementActivity extends AppCompatActivity {
 
     private void showAddWordsDialog() {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         LayoutInflater inflater = getLayoutInflater();
 
         final View dialogView = inflater.inflate(R.layout.add_words_dialog, null);
@@ -121,11 +121,8 @@ public class DictionaryElementActivity extends AppCompatActivity {
         final EditText editTextAddPolishWord = dialogView.findViewById(R.id.editTextAddPolishWord);
         final Button buttonSave = dialogView.findViewById(R.id.buttonSaveWords);
 
-        dialogBuilder.setTitle("Add new word");
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
-
-
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +157,7 @@ public class DictionaryElementActivity extends AppCompatActivity {
 
 
     private void showOptionDialog(final String elementId, String english, String polish) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         LayoutInflater inflater = getLayoutInflater();
 
         final View dialogView = inflater.inflate(R.layout.option_dictionary_element_dialog, null);
@@ -174,7 +171,6 @@ public class DictionaryElementActivity extends AppCompatActivity {
         editTextUpdateEnglishWord.setText(english);
         editTextUpdatePolishWord.setText(polish);
 
-        dialogBuilder.setTitle("Update or delete word");
         final AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.show();
 

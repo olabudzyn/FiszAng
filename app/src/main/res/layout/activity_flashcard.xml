@@ -17,9 +17,13 @@
         android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_weight="0.9">
+
         <TextView
-            android:layout_marginTop="5dp"
-            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="@dimen/max_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -30,7 +34,7 @@
             android:id="@+id/textViewCardWords"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="30dp"
+            android:layout_margin="@dimen/max_margin"
             android:background="#e0e0e0"
             android:gravity="center"
             android:text="Flash Card text"
@@ -39,12 +43,20 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-
         <Button
+            android:textAllCaps="false"
             android:id="@+id/buttonNext"
-            android:layout_width="match_parent"
+            android:textColor="#F0F0F0"
+            android:textStyle="italic"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape"
+            android:shadowColor="#424242"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:layout_marginBottom="@dimen/normal_margin"
             android:text="Next" />
 
 

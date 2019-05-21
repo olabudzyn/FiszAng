@@ -9,7 +9,7 @@
     android:background="@drawable/gradient_background">
 
     <TextView
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/medium_margin"
         android:id="@+id/txvToTranslate"
         android:layout_width="250dp"
         android:layout_height="136dp"
@@ -17,21 +17,27 @@
         android:textIsSelectable="true"/>
 
     <Button
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/medium_margin"
         android:id="@+id/buttonTranslate"
-        android:layout_width="200dp"
+        android:textAllCaps="false"
+        android:textColor="#F0F0F0"
+        android:textStyle="italic"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="Translate"
-        android:gravity="center"
-        android:background="#546e7a"
-        android:textColor="#cfd8dc"
-        android:textStyle="bold" />
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/txvTranslated"
         android:layout_width="250dp"
         android:layout_height="136dp"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/medium_margin"
         android:background="#fafafa"
         android:textColor="#29434e" />
 
@@ -39,13 +45,18 @@
 
     <Button
         android:id="@+id/buttonAddToDictionary"
-        android:text="add to dictionary"
-        android:layout_width="200dp"
+        android:text="Add to dictionary"
+        android:textAllCaps="false"
+        android:textColor="#F0F0F0"
+        android:textStyle="italic"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="#546e7a"
-        android:textColor="#cfd8dc"
-        android:textStyle="bold" />
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"/>
 
 
 </LinearLayout>

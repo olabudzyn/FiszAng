@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:text="Update or delete word"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <EditText
-        android:layout_margin="10dp"
         android:id="@+id/editTextUpdateEnglishWord"
-        android:inputType="text"
-        android:hint="Enter new english word"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        android:hint="Enter new english word"
+        android:inputType="text" />
 
     <EditText
-        android:layout_margin="10dp"
         android:id="@+id/editTextUpdatePolishWord"
-        android:inputType="text"
-        android:hint="Enter new polish word"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        android:hint="Enter new polish word"
+        android:inputType="text" />
 
     <LinearLayout
-        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="@dimen/medium_margin"
         android:orientation="horizontal"
         android:weightSum="1.0">
 
@@ -34,7 +42,12 @@
             android:id="@+id/buttonSaveUpdateWord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAllCaps="false"
             android:layout_margin="5dp"
+            android:shadowColor="#424242"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:background="@drawable/buttonshape2"
             android:layout_weight="0.5"
             android:text="Save" />
 
@@ -42,7 +55,12 @@
             android:id="@+id/deleteElement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:shadowColor="#424242"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:background="@drawable/buttonshape2"
+            android:textAllCaps="false"
+            android:layout_margin="@dimen/min_margin"
             android:layout_weight="0.5"
             android:text="Delete" />
 
