@@ -61,16 +61,6 @@ public class FlashcardActivity extends AppCompatActivity {
             }
         });
 
-       /* words.add( new DictionaryElement("1", "cat", "kot"));
-
-        words.add( new DictionaryElement("2", "mouse", "mysz"));
-
-        words.add( new DictionaryElement("3", "pig", "świnia"));
-
-        words.add( new DictionaryElement("4", "snake", "wąż"));
-
-        words.add( new DictionaryElement("5", "dog", "pies")); */
-
 
         textViewFlashcard.setOnClickListener(new View.OnClickListener() {
             @Override

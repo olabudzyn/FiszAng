@@ -7,8 +7,7 @@
     android:weightSum="1.0"
     android:background="@drawable/gradient_background">
 
-    <TextureView
-
+    <ImageView
         android:id="@+id/texture"
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -31,6 +30,22 @@
         android:shadowRadius="5"
         android:layout_margin="@dimen/min_margin"
         android:gravity="center"
-        android:text="Take a picture!" />
+        android:text="Take a picture" />
+    <Button
+        android:id="@+id/buttonTranslate2"
+        android:textAllCaps="false"
+        android:textColor="#F0F0F0"
+        android:textStyle="italic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#424242"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:layout_margin="@dimen/min_margin"
+        android:gravity="center"
+        android:text="Translate" />
 
 </LinearLayout>

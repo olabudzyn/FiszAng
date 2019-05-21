@@ -1,7 +1,4 @@
 package com.budzynska.fiszang;
-
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,14 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,12 +23,6 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.vision.v1.Vision;
 import com.google.api.services.vision.v1.VisionRequestInitializer;
-import com.google.api.services.vision.v1.model.AnnotateImageRequest;
-import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
-import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
-import com.google.api.services.vision.v1.model.Feature;
-import com.google.api.services.vision.v1.model.Image;
-import com.google.api.services.vision.v1.model.TextAnnotation;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
@@ -45,12 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.apache.commons.io.IOUtils;
-
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TranslateActivity extends AppCompatActivity {
@@ -98,15 +80,10 @@ public class TranslateActivity extends AppCompatActivity {
                 new VisionRequestInitializer(API_KEY));
 
         vision = visionBuilder.build();
-        //textDetection();
-
-
-        //txvToTranslate.setText(newText);
 
         btnTranslate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //translate();
                 // wybieranie kawałka tekstu
                 int startSelection = txvToTranslate.getSelectionStart();
                 int endSelection = txvToTranslate.getSelectionEnd();
@@ -120,11 +97,9 @@ public class TranslateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDictionaryDialog();
-                //addToDictionary();
             }
         });
-        //words = getIntent().getStringExtra("image");
-        //txvToTranslate.setText(words);
+
     }
 
     private void addToDictionary() {
@@ -140,52 +115,8 @@ public class TranslateActivity extends AppCompatActivity {
         });
     }
 
-    private void textDetection() {
-
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-
-                    InputStream inputStream = getResources().openRawResource(R.raw.superthumb);
-                    byte[] photoData = IOUtils.toByteArray(inputStream);
-
-                    Image inputImage = new Image();
-                    inputImage.encodeContent(photoData);
-
-                    Feature desiredFeature = new Feature();
-                    desiredFeature.setType("TEXT_DETECTION");
-
-                    AnnotateImageRequest request = new AnnotateImageRequest();
-                    request.setImage(inputImage);
-                    request.setFeatures(Arrays.asList(desiredFeature));
-
-                    BatchAnnotateImagesRequest batchRequest = new BatchAnnotateImagesRequest();
-                    batchRequest.setRequests(Arrays.asList(request));
-
-                    BatchAnnotateImagesResponse batchResponse =
-                            vision.images().annotate(batchRequest).execute();
-
-                    final TextAnnotation text = batchResponse.getResponses()
-                            .get(0).getFullTextAnnotation();
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            txvToTranslate.setText(text.getText());
-                        }
-                    });
-
-                } catch (Exception e) {
-                    Log.d("ERROR", e.getMessage());
-                }
-            }
-        });
-
-    }
 
     public void translate() {
-        //translateText = txvToTranslate.getText().toString(); // words to translate
 
         new AsyncTask<Void, Void, Void>() {
             @Override
@@ -210,7 +141,7 @@ public class TranslateActivity extends AppCompatActivity {
 
     private void showDictionaryDialog() {
 
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(TranslateActivity.this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(TranslateActivity.this, R.style.MyDialogTheme);
         LayoutInflater inflater = getLayoutInflater();
         View convertView = inflater.inflate(R.layout.list_dictionaries_dialog, null);
 
@@ -220,7 +151,6 @@ public class TranslateActivity extends AppCompatActivity {
 
 
         alertDialog.setView(convertView);
-        alertDialog.setTitle("Choose dictionary");
 
         AlertDialog dialog = alertDialog.create();
         dialog.show();
