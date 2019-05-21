@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:textColor="#F0F0F0"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
         android:shadowColor="#424242"

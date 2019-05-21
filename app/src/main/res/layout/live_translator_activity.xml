@@ -34,7 +34,7 @@
         android:id="@+id/buttonSaveLiveTranslate"
         android:textAllCaps="false"
         android:textColor="#F0F0F0"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

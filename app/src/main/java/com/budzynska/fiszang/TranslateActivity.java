@@ -1,4 +1,5 @@
 package com.budzynska.fiszang;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.budzynska.fiszang.basedata.Dictionary;
 import com.budzynska.fiszang.basedata.DictionaryElement;
 import com.budzynska.fiszang.listview.DictionaryList;
+import com.budzynska.fiszang.services.TranslateService;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -32,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +42,6 @@ public class TranslateActivity extends AppCompatActivity {
 
     private Button btnTranslate, btnAddToDictionary;
     private TextView txvTranslated, txvToTranslate;
-   // private static final String API_KEY = "AIzaSyDsKajjSP6Dnk6wYc9S_EvzIEqEw98WQfc";
     private List<Dictionary> dictionaries;
     private String dictionaryId;
 
@@ -47,9 +49,8 @@ public class TranslateActivity extends AppCompatActivity {
     private TranslateOptions options;
     private Translation translation;
     private Handler handler = new Handler();
-    private String translatedText, selectedText, allText;
     private Vision vision;
-
+    private String translatedText, selectedText, allText;
     private DatabaseReference databaseDictionaries;
     private DatabaseReference databaseWords;
 
@@ -89,14 +90,13 @@ public class TranslateActivity extends AppCompatActivity {
                 int endSelection = txvToTranslate.getSelectionEnd();
                 selectedText = txvToTranslate.getText().subSequence(startSelection, endSelection).toString();
                 translate();
-
             }
         });
 
         btnAddToDictionary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(translatedText != null) {
+                if (translatedText != null) {
                     showDictionaryDialog();
                 } else {
                     Toast.makeText(getApplicationContext(), "Cannot add word", Toast.LENGTH_SHORT).show();
@@ -104,7 +104,6 @@ public class TranslateActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void addToDictionary() {
@@ -124,25 +123,25 @@ public class TranslateActivity extends AppCompatActivity {
 
     public void translate() {
 
-        if(selectedText != null){
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                options = TranslateOptions.newBuilder().setApiKey(getString(R.string.api_key)).build();
-                translate = options.getService();
-                translation = translate.translate(selectedText, Translate.TranslateOption.sourceLanguage("en"), Translate.TranslateOption.targetLanguage("pl"));
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (txvTranslated != null) {
-                            txvTranslated.setText(translation.getTranslatedText());
-                            translatedText = translation.getTranslatedText();
+        if (selectedText != null) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    options = TranslateOptions.newBuilder().setApiKey(getString(R.string.api_key)).build();
+                    translate = options.getService();
+                    translation = translate.translate(selectedText, Translate.TranslateOption.sourceLanguage("en"), Translate.TranslateOption.targetLanguage("pl"));
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (txvTranslated != null) {
+                                txvTranslated.setText(translation.getTranslatedText());
+                                translatedText = translation.getTranslatedText();
+                            }
                         }
-                    }
-                });
-                return null;
-            }
-        }.execute();
+                    });
+                    return null;
+                }
+            }.execute();
 
         }
     }
@@ -186,10 +185,10 @@ public class TranslateActivity extends AppCompatActivity {
                     dictionaries.add(dictionary);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getApplicationContext(), "Error in build dictionary list", Toast.LENGTH_SHORT).show();
+                return;
             }
         });
     }

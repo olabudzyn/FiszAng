@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.budzynska.fiszang.basedata.Dictionary;
 import com.budzynska.fiszang.listview.DictionaryList;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +45,7 @@ public class DictionaryActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dictionary_activity);
 
@@ -57,7 +58,7 @@ public class DictionaryActivity extends AppCompatActivity {
         textViewDictionary = findViewById(R.id.txvDictionary);
         listViewDictionaries = findViewById(R.id.lisViewDictionaries);
         buttonAddDictionary = findViewById(R.id.buttonAddDictionary);
-        
+
         buttonAddDictionary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +99,7 @@ public class DictionaryActivity extends AppCompatActivity {
 
                 dictionaries.clear();
 
-                for(DataSnapshot snapshotDictionary: dataSnapshot.getChildren()){
+                for (DataSnapshot snapshotDictionary : dataSnapshot.getChildren()) {
 
                     Dictionary dictionary = snapshotDictionary.getValue(Dictionary.class);
                     dictionaries.add(dictionary);
@@ -110,7 +111,8 @@ public class DictionaryActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getApplicationContext(), "Cannot load dictionary list", Toast.LENGTH_SHORT).show();
+                return;
             }
         });
     }
@@ -120,7 +122,7 @@ public class DictionaryActivity extends AppCompatActivity {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         LayoutInflater inflater = getLayoutInflater();
 
-        final View dialogView = inflater.inflate(R.layout.add_dialog,null);
+        final View dialogView = inflater.inflate(R.layout.add_dialog, null);
         dialogBuilder.setView(dialogView);
 
         final EditText editTextDictionaryName = dialogView.findViewById(R.id.editTextAddDictionaryName);
@@ -134,7 +136,7 @@ public class DictionaryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = editTextDictionaryName.getText().toString().trim();
 
-                if(TextUtils.isEmpty(name)){
+                if (TextUtils.isEmpty(name)) {
                     editTextDictionaryName.setError("Name required");
                     return;
                 }
@@ -149,16 +151,21 @@ public class DictionaryActivity extends AppCompatActivity {
         String id = databaseDictionaries.push().getKey();
         Dictionary dictionary = new Dictionary(name.toLowerCase(), id);
 
-        databaseDictionaries.child(id).setValue(dictionary);
-        Toast.makeText(getApplicationContext(), "Dictionary added successfully", Toast.LENGTH_SHORT).show();
+        databaseDictionaries.child(id).setValue(dictionary).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Dictionary added successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
-    private void showOptionDialog(final String dictionaryId, String dictionaryName){
+    private void showOptionDialog(final String dictionaryId, String dictionaryName) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         final LayoutInflater inflater = getLayoutInflater();
 
-        final View dialogView = inflater.inflate(R.layout.option_dictionary_dialog,null);
+        final View dialogView = inflater.inflate(R.layout.option_dictionary_dialog, null);
         dialogBuilder.setView(dialogView);
 
         final EditText editTextDictionaryUpdateName = dialogView.findViewById(R.id.editTextUpdateDictionary);
@@ -175,7 +182,7 @@ public class DictionaryActivity extends AppCompatActivity {
 
                 String name = editTextDictionaryUpdateName.getText().toString().trim();
 
-                if(TextUtils.isEmpty(name)){
+                if (TextUtils.isEmpty(name)) {
                     editTextDictionaryUpdateName.setError("Name required");
                     return;
                 }
@@ -195,22 +202,37 @@ public class DictionaryActivity extends AppCompatActivity {
 
     }
 
-    private void deleteDictionary(String id){
+    private void deleteDictionary(String id) {
+        final boolean[] success = {false};
         DatabaseReference databaseDictionary = FirebaseDatabase.getInstance().getReference(MainMenuActivity.DICTIONARY_PATH).child(userId).child(id);
         DatabaseReference databaseWords = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(id);
 
-        databaseDictionary.removeValue();
-        databaseWords.removeValue();
+        databaseWords.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                success[0] = true;
+            }
+        });
+        databaseDictionary.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                if (success[0] == true) {
+                    Toast.makeText(getApplicationContext(), "Dictionary deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        Toast.makeText(getApplicationContext(), "Dictionary deleted", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateDictionary(String id, String name){
+    private void updateDictionary(String id, String name) {
 
         DatabaseReference databaseDictionary = FirebaseDatabase.getInstance().getReference(MainMenuActivity.DICTIONARY_PATH).child(userId).child(id);
         Dictionary dictionary = new Dictionary(name, id);
-        databaseDictionary.setValue(dictionary);
-
-        Toast.makeText(getApplicationContext(), "Dictionary updated successfully", Toast.LENGTH_SHORT).show();
+        databaseDictionary.setValue(dictionary).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Dictionary updated successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

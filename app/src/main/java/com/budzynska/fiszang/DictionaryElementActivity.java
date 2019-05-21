@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.budzynska.fiszang.basedata.Dictionary;
 import com.budzynska.fiszang.basedata.DictionaryElement;
 import com.budzynska.fiszang.listview.DictionaryElementList;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +36,6 @@ public class DictionaryElementActivity extends AppCompatActivity {
     private TextView textViewWords;
     private List<DictionaryElement> dictionaryElements;
     private String dictionaryId;
-
     private DatabaseReference databaseWords;
 
     @Override
@@ -104,7 +104,8 @@ public class DictionaryElementActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getApplicationContext(), "Cannot load word list", Toast.LENGTH_SHORT).show();
+                return;
             }
         });
     }
@@ -151,10 +152,13 @@ public class DictionaryElementActivity extends AppCompatActivity {
         String id = databaseWords.push().getKey();
         DictionaryElement dictionaryElement = new DictionaryElement(id, englishWord.toLowerCase(), polishWord.toLowerCase());
 
-        databaseWords.child(id).setValue(dictionaryElement);
-        Toast.makeText(getApplicationContext(), "Word added successfully", Toast.LENGTH_SHORT).show();
+        databaseWords.child(id).setValue(dictionaryElement).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Word added successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
 
     private void showOptionDialog(final String elementId, String english, String polish) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
@@ -209,17 +213,23 @@ public class DictionaryElementActivity extends AppCompatActivity {
 
         DatabaseReference databaseWord = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId).child(id);
         DictionaryElement dictionaryElement = new DictionaryElement(id, englishWord, polishWord);
-        databaseWord.setValue(dictionaryElement);
-
-        Toast.makeText(getApplicationContext(), "Word updated succesfully", Toast.LENGTH_SHORT).show();
-
+        databaseWord.setValue(dictionaryElement).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Word updated succesfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void deleteElement(String id) {
 
         DatabaseReference databaseWord = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId).child(id);
-        databaseWord.removeValue();
+        databaseWord.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "Word is deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        Toast.makeText(getApplicationContext(), "Word is deleted", Toast.LENGTH_SHORT).show();
     }
 }

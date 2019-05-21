@@ -1,43 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="1.0"
     android:background="@drawable/gradient2"
-    android:layout_weight="1.0">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
-        android:layout_marginTop="@dimen/normal_margin"
         android:id="@+id/txvDictionary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/normal_margin"
+        android:gravity="center"
         android:text="Your Dictionaries"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:gravity="center"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
+
     <ListView
-        android:layout_marginTop="@dimen/medium_margin"
         android:id="@+id/lisViewDictionaries"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.6"/>
+        android:divider="@color/colorAccent"
+        android:dividerHeight="1dp"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_weight="0.6" />
+
     <Button
         android:id="@+id/buttonAddDictionary"
-        android:gravity="center"
-        android:layout_margin="@dimen/min_margin"
-        android:textAllCaps="false"
-        android:textColor="#F0F0F0"
-        android:textStyle="italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="@dimen/medium_margin"
         android:background="@drawable/buttonshape3"
+        android:gravity="center"
         android:shadowColor="#424242"
         android:shadowDx="0"
         android:shadowDy="0"
-        android:text="Add dictionary"/>
+        android:text="Add dictionary"
+        android:textAllCaps="false"
+        android:textColor="#F0F0F0"
+        android:textStyle="bold" />
 
 </LinearLayout>

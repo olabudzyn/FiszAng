@@ -27,7 +27,7 @@
         android:id="@+id/buttonLiveTranslation"
         android:textAllCaps="false"
         android:textColor="#F0F0F0"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -45,7 +45,7 @@
         android:id="@+id/buttonImageTranslation"
         android:textAllCaps="false"
         android:textColor="#F0F0F0"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -62,7 +62,7 @@
         android:id="@+id/buttonDictionary"
         android:textAllCaps="false"
         android:textColor="#F0F0F0"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -89,6 +89,6 @@
         android:text="Log out"
         android:textAllCaps="false"
         android:textColor="#F0F0F0"
-        android:textStyle="italic" />
+        android:textStyle="bold"  />
 
 </LinearLayout>

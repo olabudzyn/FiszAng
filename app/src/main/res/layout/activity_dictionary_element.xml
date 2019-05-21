@@ -24,6 +24,8 @@
         android:id="@+id/listViewElements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@color/colorAccent"
+        android:dividerHeight="1dp"
         android:layout_marginTop="@dimen/medium_margin"
         android:layout_weight="0.6" />
 
@@ -31,7 +33,7 @@
         android:id="@+id/buttonAddElement"
         android:textAllCaps="false"
         android:textColor="#F0F0F0"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -49,7 +51,7 @@
         android:id="@+id/buttonFlashcards"
         android:textAllCaps="false"
         android:textColor="#F0F0F0"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

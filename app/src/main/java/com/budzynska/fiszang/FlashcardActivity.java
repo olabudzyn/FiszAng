@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.budzynska.fiszang.basedata.DictionaryElement;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +42,6 @@ public class FlashcardActivity extends AppCompatActivity {
 
         words = new ArrayList<>();
 
-        Intent intent = getIntent();
         String dictionaryId = getIntent().getStringExtra(DictionaryActivity.DICTIONARY_ID);
         databaseWords = FirebaseDatabase.getInstance().getReference(MainMenuActivity.WORDS_PATH).child(dictionaryId);
 
@@ -53,8 +53,8 @@ public class FlashcardActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                Log.d("Error", databaseError.getMessage());
+                Toast.makeText(getApplicationContext(), "Cannot load word list", Toast.LENGTH_SHORT).show();
+                return;
             }
         });
 
@@ -112,20 +112,4 @@ public class FlashcardActivity extends AppCompatActivity {
             textViewFlashcard.setText(word.getEnglishWord());
         }
     }
-
-    private boolean changeColor(boolean f) {
-
-        if (f == true) {
-            textViewFlashcard.setText(word.getPolishWord());
-            textViewFlashcard.setBackgroundColor(R.drawable.flashcardshape);
-            f = false;
-        } else {
-            textViewFlashcard.setText(word.getEnglishWord());
-            textViewFlashcard.setBackgroundColor(R.drawable.flashcardshape2);
-            f = true;
-        }
-
-        return f;
-    }
-
 }

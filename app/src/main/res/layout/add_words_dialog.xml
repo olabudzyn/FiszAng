@@ -39,6 +39,7 @@
         android:shadowColor="#424242"
         android:shadowDx="0"
         android:shadowDy="0"
+        android:textStyle="bold"
         android:textColor="@android:color/white"
         android:background="@drawable/buttonshape3"
         android:layout_margin="@dimen/medium_margin"
