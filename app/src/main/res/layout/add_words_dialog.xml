@@ -27,6 +27,7 @@
         android:id="@+id/editTextAddPolishWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
         android:layout_margin="@dimen/medium_margin"
         android:hint="Enter polish word"
         android:inputType="text" />

@@ -4,12 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gradient2"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_marginTop="@dimen/max_margin"
+        android:layout_marginLeft="@dimen/max_margin"
+        android:layout_marginRight="@dimen/max_margin"
+        android:layout_marginBottom="@dimen/min_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@color/white3"
+        android:src="@drawable/logo"
+        />
    <TextView
        android:id="@+id/textViewUserLoginName"
        android:layout_width="match_parent"
@@ -22,7 +32,7 @@
        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <EditText
-        android:layout_margin="@dimen/normal_margin"
+        android:layout_margin="@dimen/medium_margin"
         android:inputType="textEmailAddress"
         android:hint="Enter your email"
         android:textColor="@android:color/white"

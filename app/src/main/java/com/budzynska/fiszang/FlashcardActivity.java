@@ -63,16 +63,11 @@ public class FlashcardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                changeColor();
                 if (flag == true) {
                     textViewFlashcard.setText(word.getPolishWord());
-                    textViewFlashcard.setBackgroundResource(R.drawable.flashcardshape);
-                    textViewFlashcard.setTextColor(getColor(R.color.white2));
-                    flag = false;
                 } else {
                     textViewFlashcard.setText(word.getEnglishWord());
-                    textViewFlashcard.setBackgroundResource(R.drawable.flashcardshape2);
-                    textViewFlashcard.setTextColor(getColor(R.color.dark));
-                    flag = true;
                 }
             }
         });
@@ -81,10 +76,10 @@ public class FlashcardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 word = getRandomWord(words);
-                textViewFlashcard.setBackgroundResource(R.drawable.flashcardshape2);
                 textViewFlashcard.setText(word.getEnglishWord());
-                textViewFlashcard.setTextColor(getColor(R.color.dark));
-                flag = true;
+
+                changeColor();
+
             }
         });
     }
@@ -111,5 +106,19 @@ public class FlashcardActivity extends AppCompatActivity {
             word = getRandomWord(words);
             textViewFlashcard.setText(word.getEnglishWord());
         }
+    }
+
+    private void changeColor() {
+
+        if (flag == true) {
+            textViewFlashcard.setBackgroundResource(R.drawable.flashcardshape);
+            textViewFlashcard.setTextColor(getColor(R.color.white2));
+            flag = false;
+        } else {
+            textViewFlashcard.setBackgroundResource(R.drawable.flashcardshape2);
+            textViewFlashcard.setTextColor(getColor(R.color.dark));
+            flag = true;
+        }
+
     }
 }
