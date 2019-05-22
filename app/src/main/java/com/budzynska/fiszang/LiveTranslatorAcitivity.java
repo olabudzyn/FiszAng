@@ -49,14 +49,13 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
     private SurfaceView surfaceView;
     private CameraSource cameraSource;
     private static final int requestPermissionID = 101;
-    private static final String API_KEY = "AIzaSyDsKajjSP6Dnk6wYc9S_EvzIEqEw98WQfc";
 
     private Translate translate;
     private TranslateOptions options;
     private Translation translation;
     private Handler handler = new Handler();
-    private String  translateTextTranslation;
-    private String currentText ="";
+    private String translateTextTranslation;
+    private String currentText = "";
 
     private List<Dictionary> dictionaries;
     private String dictionaryId;
@@ -65,7 +64,7 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
     private DatabaseReference databaseWords;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.live_translator_activity);
 
@@ -138,13 +137,14 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode != requestPermissionID){
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        return;}
+        if (requestCode != requestPermissionID) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            return;
+        }
 
-        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             try {
-                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 cameraSource.start(surfaceView.getHolder());
@@ -155,17 +155,16 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
     }
 
     public String translate(String translateText) {
-        //translateText = txvToTranslate.getText().toString(); // words to translate
 
         String translatedText;
 
         new AsyncTask<Void, Void, Void>() {
             @Override
-            protected Void doInBackground(Void... params){
-                options = TranslateOptions.newBuilder().setApiKey(API_KEY).build();
+            protected Void doInBackground(Void... params) {
+                options = TranslateOptions.newBuilder().setApiKey(getString(R.string.api_key)).build();
                 translate = options.getService();
                 translation = translate.translate(translateText, Translate.TranslateOption.sourceLanguage("en"), Translate.TranslateOption.targetLanguage("pl"));
-               handler.post(new Runnable() {
+                handler.post(new Runnable() {
                     @Override
                     public void run() {
                         if (txvTranslated != null) {
@@ -185,7 +184,7 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
 
         final TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
 
-        if(!textRecognizer.isOperational()){
+        if (!textRecognizer.isOperational()) {
 
         } else {
             cameraSource = new CameraSource.Builder(getApplicationContext(), textRecognizer)
@@ -199,14 +198,14 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
                 @Override
                 public void surfaceCreated(SurfaceHolder holder) {
                     try {
-                        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
 
                             ActivityCompat.requestPermissions(LiveTranslatorAcitivity.this, new String[]{Manifest.permission.CAMERA}, requestPermissionID);
                             return;
                         }
                         cameraSource.start(surfaceView.getHolder());
 
-                    }catch (IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -232,18 +231,17 @@ public class LiveTranslatorAcitivity extends AppCompatActivity {
                 public void receiveDetections(Detector.Detections<TextBlock> detections) {
 
                     final SparseArray<TextBlock> items = detections.getDetectedItems();
-                    if(items.size() !=0){
+                    if (items.size() != 0) {
                         txvToTranslate.post(new Runnable() {
                             @Override
                             public void run() {
                                 StringBuilder stringBuilder = new StringBuilder();
-                                for(int i = 0 ; i < items.size() ; i++){
+                                for (int i = 0; i < items.size(); i++) {
                                     TextBlock item = items.valueAt(i);
                                     stringBuilder.append(item.getValue());
                                     stringBuilder.append(" ");
                                 }
-                                if(!stringBuilder.toString().equals(currentText))
-                                {
+                                if (!stringBuilder.toString().equals(currentText)) {
                                     currentText = stringBuilder.toString();
                                     txvToTranslate.setText(currentText);
                                     String translated = translate(currentText);

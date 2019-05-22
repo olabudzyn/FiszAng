@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.budzynska.fiszang.basedata.Dictionary;
 import com.budzynska.fiszang.basedata.DictionaryElement;
 import com.budzynska.fiszang.listview.DictionaryList;
-import com.budzynska.fiszang.services.TranslateService;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.http.javanet.NetHttpTransport;
